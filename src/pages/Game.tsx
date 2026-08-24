@@ -7,7 +7,6 @@ import Modal from '../components/Modal';
 import SettingsModal from '../components/SettingsModal';
 import HowToModal from '../components/HowToModal';
 import GameHeader from '../components/GameHeader';
-import GameControls from '../components/GameControls';
 import CornerBadge, { type CornerDice } from '../components/CornerBadge';
 
 import { gameReducer, initialGameState } from '../lib/ludo';
@@ -177,8 +176,6 @@ export default function GamePage() {
           </div>
         </div>
       </div>
-
-      <GameControls status={statusText} canRoll={canRoll} onRoll={handleRoll} />
 
       <SettingsModal
         open={showSettings}
