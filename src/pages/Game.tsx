@@ -1,17 +1,14 @@
 import { useEffect, useReducer, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import {
-  ArrowLeft,
-  HelpCircle,
-  LogOut,
-  Settings as SettingsIcon,
-} from 'lucide-react';
+import { Trophy } from 'lucide-react';
 
 import Board from '../components/Board';
-import Dice from '../components/Dice';
 import Modal from '../components/Modal';
 import SettingsModal from '../components/SettingsModal';
 import HowToModal from '../components/HowToModal';
+import GameHeader from '../components/GameHeader';
+import GameControls from '../components/GameControls';
+import PlayerPanel from '../components/PlayerPanel';
 
 import { gameReducer, initialGameState } from '../lib/ludo';
 import { rollDie } from '../lib/dice';
@@ -59,12 +56,8 @@ export default function GamePage() {
   useEffect(() => {
     if (state.phase === 'rolled' && state.validTokenIds.length === 1) {
       const timer = window.setTimeout(() => {
-        dispatch({
-          type: 'MOVE_TOKEN',
-          tokenId: state.validTokenIds[0] ?? 0,
-        });
+        dispatch({ type: 'MOVE_TOKEN', tokenId: state.validTokenIds[0] ?? 0 });
       }, 420);
-
       return () => window.clearTimeout(timer);
     }
 
@@ -77,7 +70,6 @@ export default function GamePage() {
       const timer = window.setTimeout(() => {
         dispatch({ type: 'PASS_TURN' });
       }, 950);
-
       return () => window.clearTimeout(timer);
     }
   }, [state.phase, state.validTokenIds, state.lastDice, state.message]);
@@ -114,12 +106,12 @@ export default function GamePage() {
     if (color === state.current && state.phase === 'rolled') {
       vibrate([18]);
       setShakeToken(`${color}-${id}`);
-
-      window.setTimeout(() => {
-        setShakeToken(null);
-      }, 520);
+      window.setTimeout(() => setShakeToken(null), 520);
     }
   };
+
+  const finishedCount = (color: PlayerColor) =>
+    state.tokens[color].filter((t) => t.progress >= 56).length;
 
   const statusText = state.winner
     ? ''
@@ -131,46 +123,25 @@ export default function GamePage() {
 
   return (
     <div className="page game-page">
-      <header className="top-bar">
-        <button
-          className="icon-btn"
-          onClick={() => setShowExit(true)}
-          aria-label="Back"
-        >
-          <ArrowLeft size={20} />
-        </button>
+      <GameHeader
+        onBack={() => setShowExit(true)}
+        onHelp={() => setShowHelp(true)}
+        onSettings={() => setShowSettings(true)}
+        onExit={() => setShowExit(true)}
+      />
 
-        <div className={`turn-pill ${state.current}`}>
-          <span className="dot" />
-          {colorLabel(state.current)}'s turn
-        </div>
-
-        <div className="top-actions">
-          <button
-            className="icon-btn"
-            onClick={() => setShowHelp(true)}
-            aria-label="Help"
-          >
-            <HelpCircle size={19} />
-          </button>
-
-          <button
-            className="icon-btn"
-            onClick={() => setShowSettings(true)}
-            aria-label="Settings"
-          >
-            <SettingsIcon size={19} />
-          </button>
-
-          <button
-            className="icon-btn"
-            onClick={() => setShowExit(true)}
-            aria-label="Exit"
-          >
-            <LogOut size={19} />
-          </button>
-        </div>
-      </header>
+      <div className="panels-row">
+        <PlayerPanel
+          color="red"
+          active={state.current === 'red' && !state.winner}
+          finished={finishedCount('red')}
+        />
+        <PlayerPanel
+          color="green"
+          active={state.current === 'green' && !state.winner}
+          finished={finishedCount('green')}
+        />
+      </div>
 
       <div className="board-wrap">
         <Board
@@ -181,27 +152,27 @@ export default function GamePage() {
         />
       </div>
 
-      <div className="controls">
-        <div className="status-text" aria-live="polite">
-          {statusText}
-        </div>
-
-        <div className="dice-row">
-          <Dice
-            value={state.lastDice}
-            rolling={state.phase === 'rolling'}
-            color={state.current}
-          />
-
-          <button
-            className="btn btn-primary roll-btn"
-            disabled={!canRoll}
-            onClick={handleRoll}
-          >
-            {state.phase === 'rolling' ? 'ROLLING' : 'ROLL'}
-          </button>
-        </div>
+      <div className="panels-row">
+        <PlayerPanel
+          color="blue"
+          active={state.current === 'blue' && !state.winner}
+          finished={finishedCount('blue')}
+        />
+        <PlayerPanel
+          color="yellow"
+          active={state.current === 'yellow' && !state.winner}
+          finished={finishedCount('yellow')}
+        />
       </div>
+
+      <GameControls
+        status={statusText}
+        diceValue={state.lastDice}
+        rolling={state.phase === 'rolling'}
+        color={state.current}
+        canRoll={canRoll}
+        onRoll={handleRoll}
+      />
 
       <SettingsModal
         open={showSettings}
@@ -212,21 +183,12 @@ export default function GamePage() {
 
       <HowToModal open={showHelp} onClose={() => setShowHelp(false)} />
 
-      <Modal
-        open={showExit}
-        onClose={() => setShowExit(false)}
-        title="Leave game?"
-      >
+      <Modal open={showExit} onClose={() => setShowExit(false)} title="Leave game?">
         <p className="muted">Your current match progress will be lost.</p>
-
         <div className="modal-actions">
-          <button
-            className="btn btn-ghost"
-            onClick={() => setShowExit(false)}
-          >
+          <button className="btn btn-blue" onClick={() => setShowExit(false)}>
             CANCEL
           </button>
-
           <button className="btn btn-danger" onClick={() => navigate('/')}>
             EXIT
           </button>
@@ -236,22 +198,25 @@ export default function GamePage() {
       {state.winner && (
         <div className="modal-backdrop winner-backdrop">
           <div className={`winner-card winner-${state.winner}`}>
-            <div className="winner-color">
+            <div className="winner-trophy">
+              <Trophy size={44} />
+            </div>
+
+            <div className={`winner-color wcolor-${state.winner}`}>
               {colorLabel(state.winner)}
             </div>
 
-            <h2>WINS</h2>
+            <h2>WINS!</h2>
             <p className="muted">All four tokens reached home.</p>
 
-            <div className="winner-actions">
+            <div className="modal-actions">
               <button
-                className="btn btn-primary"
+                className="btn btn-gold"
                 onClick={() => dispatch({ type: 'RESET' })}
               >
                 PLAY AGAIN
               </button>
-
-              <button className="btn btn-ghost" onClick={() => navigate('/')}>
+              <button className="btn btn-blue" onClick={() => navigate('/')}>
                 EXIT
               </button>
             </div>
