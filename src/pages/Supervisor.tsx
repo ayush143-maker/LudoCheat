@@ -64,7 +64,6 @@ export default function SupervisorPage() {
           <p className="muted">
             Supabase is not configured. Add these environment variables:
           </p>
-
           <p className="muted small">
             VITE_SUPABASE_URL
             <br />
@@ -181,6 +180,11 @@ export default function SupervisorPage() {
     ? `Override Active: ${current?.target_number} → ${current?.target_probability}%`
     : 'Normal Random';
 
+  const handleSignOut = async () => {
+    if (!supabase) return;
+    await supabase.auth.signOut();
+  };
+
   return (
     <div className="page supervisor-page">
       <div className="card supervisor-card">
@@ -192,9 +196,7 @@ export default function SupervisorPage() {
 
           <button
             className="icon-btn"
-            onClick={async () => {
-              await supabase.auth.signOut();
-            }}
+            onClick={handleSignOut}
             aria-label="Sign out"
           >
             <LogOut size={18} />
