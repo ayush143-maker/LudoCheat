@@ -89,6 +89,11 @@ export default function Board({
         <div className="base base-yellow" />
         <div className="base base-blue" />
 
+        <span className="quad-label quad-label-red">RED</span>
+        <span className="quad-label quad-label-green">GREEN</span>
+        <span className="quad-label quad-label-yellow">YELLOW</span>
+        <span className="quad-label quad-label-blue">BLUE</span>
+
         <div className="center">
           <div className="center-red" />
           <div className="center-green" />
