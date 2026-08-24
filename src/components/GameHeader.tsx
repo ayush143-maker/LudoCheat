@@ -1,6 +1,5 @@
 import {
   ArrowLeft,
-  Coins,
   HelpCircle,
   LogOut,
   Settings,
@@ -20,26 +19,21 @@ export default function GameHeader({
   return (
     <header className="game-header">
       <button className="gbtn" onClick={onBack} aria-label="Back">
-        <ArrowLeft size={20} />
+        <ArrowLeft size={16} />
       </button>
-
-      <div className="coin-chip">
-        <Coins size={16} />
-        <span>2,500</span>
-      </div>
 
       <div className="header-spacer" />
 
       <button className="gbtn" onClick={onHelp} aria-label="Help">
-        <HelpCircle size={19} />
+        <HelpCircle size={15} />
       </button>
 
       <button className="gbtn" onClick={onSettings} aria-label="Settings">
-        <Settings size={19} />
+        <Settings size={15} />
       </button>
 
       <button className="gbtn" onClick={onExit} aria-label="Exit">
-        <LogOut size={19} />
+        <LogOut size={15} />
       </button>
     </header>
   );
