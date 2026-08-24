@@ -54,9 +54,13 @@ export function useSupervisorSettings() {
   useEffect(() => {
     load();
 
-    if (!supabase) return;
+    const client = supabase;
 
-    const channel = supabase
+    if (!client) {
+      return;
+    }
+
+    const channel = client
       .channel('supervisor-settings-realtime')
       .on(
         'postgres_changes',
@@ -72,7 +76,7 @@ export function useSupervisorSettings() {
       .subscribe();
 
     return () => {
-      supabase.removeChannel(channel);
+      client.removeChannel(channel);
     };
   }, [load]);
 
