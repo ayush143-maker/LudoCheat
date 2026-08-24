@@ -1,11 +1,11 @@
 :root {
-  --red: #e8433f;
+  --red: #f02026;
   --red-dark: #b02a26;
-  --green: #2eb857;
+  --green: #00a94f;
   --green-dark: #1d8f43;
-  --yellow: #f7c500;
+  --yellow: #ffd817;
   --yellow-dark: #cf9f00;
-  --blue: #2f80ed;
+  --blue: #159fe8;
   --blue-dark: #1e5fbe;
 
   --gold: #ffb300;
@@ -479,44 +479,26 @@ button {
 .game-header {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
-  padding-top: calc(8px + env(safe-area-inset-top));
+  gap: 6px;
+  padding: 6px 8px 2px;
+  padding-top: calc(6px + env(safe-area-inset-top));
 }
 
 .gbtn {
-  width: 40px;
-  height: 40px;
-  border-radius: 12px;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
   display: grid;
   place-items: center;
-  color: #fff;
-  background: linear-gradient(180deg, #1c4a8c, #123564);
-  border: 1px solid #2f62ab;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color: #cfe1ff;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   cursor: pointer;
   transition: transform 0.12s ease;
 }
 
 .gbtn:active {
   transform: scale(0.92);
-}
-
-.coin-chip {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0 12px;
-  height: 36px;
-  border-radius: 999px;
-  background: linear-gradient(180deg, var(--gold-light), var(--gold));
-  color: #5b3a00;
-  font-weight: 800;
-  box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
 }
 
 .header-spacer {
@@ -528,22 +510,32 @@ button {
 .panels-row {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
-  padding: 6px 10px;
+  gap: 6px;
+  padding: 2px 8px;
+}
+
+.panels-row:first-of-type {
+  margin-bottom: -6px;
+}
+
+.panels-row:last-of-type {
+  margin-top: -6px;
 }
 
 .player-panel {
+  position: relative;
+  z-index: 3;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
-  min-height: 52px;
-  border-radius: 14px;
-  background: linear-gradient(180deg, #16407c, #0e2f5e);
-  border: 2px solid #275a9e;
+  gap: 6px;
+  padding: 4px 8px;
+  min-height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(180deg, #1a4a8c, #0e2f5e);
+  border: 1.5px solid #d9a91f;
   box-shadow:
-    0 4px 10px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 3px 6px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
@@ -566,22 +558,21 @@ button {
 .panel-active {
   border-color: #ffd75e;
   box-shadow:
-    0 0 0 3px rgba(255, 215, 94, 0.25),
-    0 4px 14px rgba(0, 0, 0, 0.4);
-  transform: translateY(-1px);
+    0 0 0 2px rgba(255, 215, 94, 0.35),
+    0 4px 10px rgba(0, 0, 0, 0.4);
 }
 
 .panel-avatar {
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   display: grid;
   place-items: center;
   color: #fff;
   background: var(--pc);
   box-shadow:
-    inset 0 -3px 5px rgba(0, 0, 0, 0.3),
-    0 0 0 2px rgba(255, 255, 255, 0.35);
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    0 0 0 1.5px rgba(255, 255, 255, 0.4);
   flex: 0 0 auto;
 }
 
@@ -593,21 +584,21 @@ button {
 
 .panel-name {
   font-weight: 800;
-  font-size: 13px;
-  letter-spacing: 0.06em;
+  font-size: 11px;
+  letter-spacing: 0.04em;
   color: #fff;
   line-height: 1.1;
 }
 
 .panel-dots {
   display: flex;
-  gap: 4px;
-  margin-top: 4px;
+  gap: 3px;
+  margin-top: 3px;
 }
 
 .pdot {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.22);
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.4);
@@ -615,18 +606,18 @@ button {
 
 .pdot-on {
   background: var(--pc);
-  box-shadow: 0 0 6px var(--pc);
+  box-shadow: 0 0 4px var(--pc);
 }
 
 .panel-turn {
   margin-left: auto;
   background: linear-gradient(180deg, var(--gold-light), var(--gold));
   color: #5b3a00;
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 800;
-  padding: 3px 8px;
+  padding: 2px 6px;
   border-radius: 999px;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
@@ -637,11 +628,11 @@ button {
   min-height: 0;
   display: grid;
   place-items: center;
-  padding: 4px 10px;
+  padding: 2px 8px;
 }
 
 .board {
-  width: min(94vw, 52dvh, 560px);
+  width: min(96vw, 58dvh, 600px);
   aspect-ratio: 1;
   position: relative;
 }
@@ -673,43 +664,41 @@ button {
   position: absolute;
   width: 40%;
   height: 40%;
-  border-radius: 12px;
-  box-shadow:
-    inset 0 2px 0 rgba(255, 255, 255, 0.25),
-    inset 0 -4px 8px rgba(0, 0, 0, 0.25);
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
 }
 
 .base::after {
   content: '';
   position: absolute;
   inset: 13%;
-  border-radius: 12px;
-  background: #fdfaf1;
-  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  background: #ffffff;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
 }
 
 .base-red {
   top: 0;
   left: 0;
-  background: linear-gradient(160deg, #f0554f, #c02b26);
+  background: var(--red);
 }
 
 .base-green {
   top: 0;
   right: 0;
-  background: linear-gradient(160deg, #3ecf6d, #1d8f43);
+  background: var(--green);
 }
 
 .base-yellow {
   bottom: 0;
   right: 0;
-  background: linear-gradient(160deg, #ffd23a, #d9a400);
+  background: var(--yellow);
 }
 
 .base-blue {
   bottom: 0;
   left: 0;
-  background: linear-gradient(160deg, #4d9bff, #1e5fbe);
+  background: var(--blue);
 }
 
 .base-slot {
@@ -719,9 +708,7 @@ button {
   transform: translate(-50%, -50%);
   border-radius: 50%;
   background: var(--slot);
-  box-shadow:
-    inset 0 3px 6px rgba(0, 0, 0, 0.3),
-    0 1px 0 rgba(255, 255, 255, 0.6);
+  box-shadow: inset 0 0 0 2px rgba(0, 0, 0, 0.15);
   z-index: 2;
 }
 
@@ -856,10 +843,10 @@ button {
     var(--tk-dark) 78% 100%
   );
   box-shadow:
-    0 3px 6px rgba(0, 0, 0, 0.4),
-    inset 0 -3px 5px rgba(0, 0, 0, 0.35),
-    inset 0 2px 3px rgba(255, 255, 255, 0.45),
-    0 0 0 2px var(--tk-dark);
+    0 2px 4px rgba(0, 0, 0, 0.35),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.3),
+    inset 0 1px 2px rgba(255, 255, 255, 0.4),
+    0 0 0 1.5px var(--tk-dark);
   transition:
     top 0.35s ease,
     left 0.35s ease,
@@ -958,31 +945,31 @@ button {
 /* ---------- controls ---------- */
 
 .game-controls {
-  padding: 6px 12px calc(12px + env(safe-area-inset-bottom));
+  padding: 4px 10px calc(8px + env(safe-area-inset-bottom));
   display: grid;
-  gap: 8px;
+  gap: 6px;
   justify-items: center;
 }
 
 .status-pill {
-  min-height: 28px;
+  min-height: 24px;
   display: inline-flex;
   align-items: center;
-  padding: 2px 14px;
+  padding: 2px 12px;
   border-radius: 999px;
-  background: rgba(6, 20, 44, 0.7);
+  background: rgba(6, 20, 44, 0.6);
   border: 1px solid #27508f;
   color: #cfe1ff;
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .controls-row {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 10px;
   width: 100%;
-  max-width: 420px;
+  max-width: 360px;
 }
 
 .dice-tap {
@@ -1004,18 +991,17 @@ button {
 
 .roll-button {
   flex: 1;
-  min-height: 60px;
+  min-height: 46px;
   border: none;
-  border-radius: 16px;
-  font-size: 20px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 800;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.1em;
   color: #5b3a00;
   background: linear-gradient(180deg, var(--gold-light), var(--gold));
   box-shadow:
-    0 5px 0 var(--gold-dark),
-    0 10px 18px rgba(0, 0, 0, 0.4),
-    inset 0 2px 0 rgba(255, 255, 255, 0.6);
+    0 3px 0 var(--gold-dark),
+    0 5px 10px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition:
     transform 0.1s ease,
@@ -1023,33 +1009,32 @@ button {
 }
 
 .roll-button:active:not(:disabled) {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 var(--gold-dark), 0 6px 12px rgba(0, 0, 0, 0.35);
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--gold-dark), 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
 .roll-button:disabled {
   filter: grayscale(0.4);
   opacity: 0.55;
   cursor: not-allowed;
-  box-shadow: 0 3px 0 var(--gold-dark);
+  box-shadow: 0 2px 0 var(--gold-dark);
 }
 
 /* ---------- dice ---------- */
 
 .dice {
-  width: 64px;
-  height: 64px;
-  border-radius: 14px;
+  width: 44px;
+  height: 44px;
+  border-radius: 9px;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   place-items: center;
-  padding: 10px;
-  background: linear-gradient(160deg, #ffffff, #dde5ee);
+  padding: 6px;
+  background: #fdfdfd;
   box-shadow:
-    0 4px 0 #aeb9c6,
-    0 8px 14px rgba(0, 0, 0, 0.45),
-    inset 0 2px 2px rgba(255, 255, 255, 0.9);
-  border: 3px solid var(--dc, #fff);
+    0 2px 0 #c7cfd8,
+    0 3px 6px rgba(0, 0, 0, 0.35);
+  border: 2px solid var(--dc, #d8dde4);
 }
 
 .dice-red {
@@ -1070,12 +1055,12 @@ button {
 }
 
 .pip {
-  width: 10px;
-  height: 10px;
+  width: 6px;
+  height: 6px;
   border-radius: 50%;
   background: #17233c;
   box-shadow:
-    inset 0 2px 3px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(0, 0, 0, 0.7),
     0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
