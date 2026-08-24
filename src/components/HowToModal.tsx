@@ -2,26 +2,10 @@ import Modal from './Modal';
 import { Dice5, Footprints, Target, Trophy } from 'lucide-react';
 
 const steps = [
-  {
-    icon: Dice5,
-    title: 'Roll',
-    text: 'Tap ROLL to throw the dice.',
-  },
-  {
-    icon: Footprints,
-    title: 'Move',
-    text: 'Use a 6 to leave base, then move along the path.',
-  },
-  {
-    icon: Target,
-    title: 'Capture',
-    text: 'Land on an opponent token to send it home. Safe cells protect tokens.',
-  },
-  {
-    icon: Trophy,
-    title: 'Win',
-    text: 'Bring all four tokens to the center to win.',
-  },
+  { icon: Dice5, title: 'Roll the dice', text: 'Tap ROLL or the dice itself.' },
+  { icon: Footprints, title: 'Move tokens', text: 'A 6 takes a token out of base.' },
+  { icon: Target, title: 'Capture', text: 'Land on a rival to send it home. Stars are safe.' },
+  { icon: Trophy, title: 'Win', text: 'Get all 4 tokens to the center.' },
 ];
 
 export default function HowToModal({
@@ -34,7 +18,7 @@ export default function HowToModal({
   return (
     <Modal open={open} onClose={onClose} title="How To Play">
       <div className="howto-list">
-        {steps.map((step) => {
+        {steps.map((step, index) => {
           const Icon = step.icon;
 
           return (
@@ -42,9 +26,10 @@ export default function HowToModal({
               <div className="howto-icon">
                 <Icon size={20} />
               </div>
-
               <div>
-                <strong>{step.title}</strong>
+                <strong>
+                  {index + 1}. {step.title}
+                </strong>
                 <p className="muted small">{step.text}</p>
               </div>
             </div>
