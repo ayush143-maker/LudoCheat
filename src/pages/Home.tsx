@@ -16,26 +16,28 @@ export default function Home() {
   return (
     <div className="page home-page">
       <div className="home-hero">
-        <Logo size={104} />
+        <div className="home-logo-badge">
+          <Logo size={92} />
+        </div>
         <h1 className="app-title">LUDO NOVA</h1>
-        <p className="muted">Classic 4-color race</p>
+        <p className="app-sub">Classic 4-color race</p>
       </div>
 
       <button
-        className="btn btn-primary btn-play"
+        className="btn btn-gold btn-play"
         onClick={() => navigate('/game')}
       >
-        <Play size={22} />
+        <Play size={22} fill="currentColor" />
         PLAY
       </button>
 
       <div className="home-actions">
-        <button className="btn btn-ghost" onClick={() => setShowHelp(true)}>
+        <button className="btn btn-blue" onClick={() => setShowHelp(true)}>
           <HelpCircle size={18} />
           HOW TO PLAY
         </button>
 
-        <button className="btn btn-ghost" onClick={() => setShowSettings(true)}>
+        <button className="btn btn-blue" onClick={() => setShowSettings(true)}>
           <SettingsIcon size={18} />
           SETTINGS
         </button>
