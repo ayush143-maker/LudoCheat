@@ -130,49 +130,84 @@ export default function GamePage() {
         onExit={() => setShowExit(true)}
       />
 
-      <div className="panels-row">
-        <PlayerPanel
-          color="red"
-          active={state.current === 'red' && !state.winner}
-          finished={finishedCount('red')}
-        />
-        <PlayerPanel
-          color="green"
-          active={state.current === 'green' && !state.winner}
-          finished={finishedCount('green')}
-        />
-      </div>
-
       <div className="board-wrap">
-        <Board
-          state={state}
-          shakeToken={shakeToken}
-          onTokenClick={handleTokenClick}
-          onInvalidToken={handleInvalidToken}
-        />
+        <div className="board-stage">
+          <PlayerPanel
+            corner="tl"
+            color="red"
+            active={state.current === 'red' && !state.winner}
+            finished={finishedCount('red')}
+            dice={
+              state.current === 'red'
+                ? {
+                    value: state.lastDice,
+                    rolling: state.phase === 'rolling',
+                    canRoll,
+                    onRoll: handleRoll,
+                  }
+                : undefined
+            }
+          />
+          <PlayerPanel
+            corner="tr"
+            color="green"
+            active={state.current === 'green' && !state.winner}
+            finished={finishedCount('green')}
+            dice={
+              state.current === 'green'
+                ? {
+                    value: state.lastDice,
+                    rolling: state.phase === 'rolling',
+                    canRoll,
+                    onRoll: handleRoll,
+                  }
+                : undefined
+            }
+          />
+
+          <Board
+            state={state}
+            shakeToken={shakeToken}
+            onTokenClick={handleTokenClick}
+            onInvalidToken={handleInvalidToken}
+          />
+
+          <PlayerPanel
+            corner="bl"
+            color="blue"
+            active={state.current === 'blue' && !state.winner}
+            finished={finishedCount('blue')}
+            dice={
+              state.current === 'blue'
+                ? {
+                    value: state.lastDice,
+                    rolling: state.phase === 'rolling',
+                    canRoll,
+                    onRoll: handleRoll,
+                  }
+                : undefined
+            }
+          />
+          <PlayerPanel
+            corner="br"
+            color="yellow"
+            active={state.current === 'yellow' && !state.winner}
+            finished={finishedCount('yellow')}
+            dice={
+              state.current === 'yellow'
+                ? {
+                    value: state.lastDice,
+                    rolling: state.phase === 'rolling',
+                    canRoll,
+                    onRoll: handleRoll,
+                  }
+                : undefined
+            }
+          />
+        </div>
       </div>
 
-      <div className="panels-row">
-        <PlayerPanel
-          color="blue"
-          active={state.current === 'blue' && !state.winner}
-          finished={finishedCount('blue')}
-        />
-        <PlayerPanel
-          color="yellow"
-          active={state.current === 'yellow' && !state.winner}
-          finished={finishedCount('yellow')}
-        />
-      </div>
-
-      <GameControls
-        status={statusText}
-        diceValue={state.lastDice}
-        rolling={state.phase === 'rolling'}
-        color={state.current}
-        canRoll={canRoll}
-        onRoll={handleRoll}
-      />
+      <GameControls status={statusText} canRoll={canRoll} onRoll={handleRoll} />
 
       <SettingsModal
         open={showSettings}
