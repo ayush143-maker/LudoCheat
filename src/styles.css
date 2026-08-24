@@ -505,54 +505,37 @@ button {
   flex: 1;
 }
 
-/* ---------- corner player panels ---------- */
+/* ---------- corner badges ---------- */
 
-.panel-red {
+.corner-pin-red {
   --pc: var(--red);
 }
-.panel-green {
+.corner-pin-green {
   --pc: var(--green);
 }
-.panel-yellow {
+.corner-pin-yellow {
   --pc: var(--yellow);
 }
-.panel-blue {
+.corner-pin-blue {
   --pc: var(--blue);
 }
 
-.corner-panel {
-  position: absolute;
-  z-index: 4;
+.corner-row {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  padding: 0 3%;
 }
 
-.corner-panel.corner-flip {
-  flex-direction: row-reverse;
-}
-
-.corner-tl {
-  top: -16px;
-  left: 5%;
-}
-.corner-tr {
-  top: -16px;
-  right: 5%;
-}
-.corner-bl {
-  bottom: -16px;
-  left: 5%;
-}
-.corner-br {
-  bottom: -16px;
-  right: 5%;
+.corner-badge {
+  display: flex;
+  align-items: center;
+  height: 38px;
 }
 
 .corner-pin {
-  position: relative;
-  z-index: 2;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: grid;
   place-items: center;
@@ -561,70 +544,59 @@ button {
   border: 2.5px solid #fff;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
   flex: 0 0 auto;
-}
-
-.corner-dots {
-  position: absolute;
-  bottom: -8px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 2px;
-  padding: 1px 3px;
-  border-radius: 999px;
-  background: rgba(6, 20, 44, 0.85);
-}
-
-.pdot {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.25);
-}
-
-.pdot-on {
-  background: var(--pc);
-  box-shadow: 0 0 3px var(--pc);
+  position: relative;
+  z-index: 2;
 }
 
 .corner-box {
-  min-width: 46px;
-  height: 34px;
-  margin-left: -12px;
-  padding-left: 16px;
-  border-radius: 0 10px 10px 0;
-  background: linear-gradient(180deg, #f6c9c9, #e8b3b3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  min-width: 54px;
+  padding: 0 10px;
+  background: linear-gradient(160deg, #f0c6c6, #ddadad);
   border: 2px solid #d9a91f;
-  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
 }
 
-.corner-flip .corner-box {
-  margin-left: 0;
-  margin-right: -12px;
-  padding-left: 0;
-  padding-right: 16px;
+.corner-side-left .corner-box {
+  margin-left: -14px;
+  padding-left: 20px;
+  border-radius: 0 10px 10px 0;
+}
+
+.corner-side-right .corner-box {
+  margin-right: -14px;
+  padding-right: 20px;
   border-radius: 10px 0 0 10px;
 }
 
 .corner-box-dice {
-  display: grid;
-  place-items: center;
-  padding: 3px 3px 3px 15px;
-  background: transparent;
-  border: none;
   cursor: pointer;
-}
-
-.corner-flip .corner-box-dice {
-  padding: 3px 15px 3px 3px;
+  background: #fdfdfd;
 }
 
 .corner-box-dice:disabled {
   cursor: not-allowed;
-  opacity: 0.7;
+  opacity: 0.75;
 }
 
-.corner-box.panel-active {
+.corner-box-dice .dice {
+  width: 26px;
+  height: 26px;
+  padding: 3px;
+  border-radius: 6px;
+  box-shadow: none;
+  border-width: 1.5px;
+}
+
+.corner-box-dice .pip {
+  width: 4px;
+  height: 4px;
+}
+
+.corner-badge-active .corner-box {
   border-color: #ffd75e;
   box-shadow:
     0 0 0 2px rgba(255, 215, 94, 0.4),
@@ -634,17 +606,18 @@ button {
 .corner-arrow {
   display: grid;
   place-items: center;
-  margin-left: 4px;
   color: var(--gold);
-  animation: arrowPulse 1s ease-in-out infinite;
+  margin-left: 2px;
+  animation: arrowPulseLeft 1s ease-in-out infinite;
 }
 
-.corner-flip .corner-arrow {
+.corner-side-right .corner-arrow {
   margin-left: 0;
-  margin-right: 4px;
+  margin-right: 2px;
+  animation-name: arrowPulseRight;
 }
 
-@keyframes arrowPulse {
+@keyframes arrowPulseLeft {
   0%,
   100% {
     opacity: 0.5;
@@ -656,11 +629,7 @@ button {
   }
 }
 
-.corner-flip .corner-arrow {
-  animation-name: arrowPulseFlip;
-}
-
-@keyframes arrowPulseFlip {
+@keyframes arrowPulseRight {
   0%,
   100% {
     opacity: 0.5;
@@ -679,12 +648,15 @@ button {
   min-height: 0;
   display: grid;
   place-items: center;
-  padding: 20px 8px;
+  padding: 4px 8px;
 }
 
 .board-stage {
-  position: relative;
-  width: min(96vw, 56dvh, 600px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  width: min(96vw, 54dvh, 600px);
 }
 
 .board {
