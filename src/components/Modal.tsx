@@ -16,10 +16,7 @@ export default function Modal({
 
   return (
     <div className="modal-backdrop" onClick={onClose}>
-      <div
-        className="modal"
-        onClick={(event) => event.stopPropagation()}
-      >
+      <div className="modal" onClick={(event) => event.stopPropagation()}>
         <button
           className="icon-btn modal-close"
           onClick={onClose}
