@@ -56,7 +56,8 @@ export default function Token({
         onClick();
       }}
     >
-      <span className="token-inner" />
+      <span className="token-ring" />
+      <span className="token-gloss" />
     </button>
   );
 }
