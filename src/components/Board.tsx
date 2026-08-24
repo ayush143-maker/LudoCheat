@@ -7,6 +7,13 @@ import {
   SAFE_INDICES,
   getTokenCoordinate,
 } from '../lib/ludo';
+import {
+  ArrowDown,
+  ArrowLeft,
+  ArrowRight,
+  ArrowUp,
+  Star,
+} from 'lucide-react';
 import Token from './Token';
 
 const CELL = 100 / 15;
@@ -32,6 +39,13 @@ const START_CELL_COLOR: Record<number, PlayerColor> = {
   13: 'green',
   26: 'yellow',
   39: 'blue',
+};
+
+const START_ARROW: Record<number, typeof ArrowUp> = {
+  0: ArrowRight,
+  13: ArrowDown,
+  26: ArrowLeft,
+  39: ArrowUp,
 };
 
 interface BoardProps {
@@ -62,13 +76,7 @@ export default function Board({
       const key = `${coord[0]}:${coord[1]}`;
 
       const arr = groups.get(key) ?? [];
-      arr.push({
-        color,
-        id: token.id,
-        coord,
-        progress: token.progress,
-      });
-
+      arr.push({ color, id: token.id, coord, progress: token.progress });
       groups.set(key, arr);
     }
   }
@@ -90,6 +98,7 @@ export default function Board({
 
         {PATH.map((coord, index) => {
           const startColor = START_CELL_COLOR[index];
+          const Arrow = startColor ? START_ARROW[index] : null;
 
           return (
             <div
@@ -99,7 +108,15 @@ export default function Board({
               }`}
               style={cellStyle(coord)}
             >
-              {SAFE_INDICES.has(index) ? <span className="safe-mark" /> : null}
+              {Arrow ? (
+                <span className="start-arrow">
+                  <Arrow strokeWidth={3.2} />
+                </span>
+              ) : SAFE_INDICES.has(index) ? (
+                <span className="safe-star">
+                  <Star strokeWidth={1.6} />
+                </span>
+              ) : null}
             </div>
           );
         })}
@@ -133,8 +150,7 @@ export default function Board({
               state.phase === 'rolled' &&
               !state.winner;
 
-            const valid =
-              interactive && state.validTokenIds.includes(item.id);
+            const valid = interactive && state.validTokenIds.includes(item.id);
 
             return (
               <Token
