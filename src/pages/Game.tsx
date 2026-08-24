@@ -8,7 +8,7 @@ import SettingsModal from '../components/SettingsModal';
 import HowToModal from '../components/HowToModal';
 import GameHeader from '../components/GameHeader';
 import GameControls from '../components/GameControls';
-import PlayerPanel from '../components/PlayerPanel';
+import CornerBadge, { type CornerDice } from '../components/CornerBadge';
 
 import { gameReducer, initialGameState } from '../lib/ludo';
 import { rollDie } from '../lib/dice';
@@ -110,8 +110,15 @@ export default function GamePage() {
     }
   };
 
-  const finishedCount = (color: PlayerColor) =>
-    state.tokens[color].filter((t) => t.progress >= 56).length;
+  const diceFor = (color: PlayerColor): CornerDice | undefined =>
+    state.current === color
+      ? {
+          value: state.lastDice,
+          rolling: state.phase === 'rolling',
+          canRoll,
+          onRoll: handleRoll,
+        }
+      : undefined;
 
   const statusText = state.winner
     ? ''
@@ -132,38 +139,20 @@ export default function GamePage() {
 
       <div className="board-wrap">
         <div className="board-stage">
-          <PlayerPanel
-            corner="tl"
-            color="red"
-            active={state.current === 'red' && !state.winner}
-            finished={finishedCount('red')}
-            dice={
-              state.current === 'red'
-                ? {
-                    value: state.lastDice,
-                    rolling: state.phase === 'rolling',
-                    canRoll,
-                    onRoll: handleRoll,
-                  }
-                : undefined
-            }
-          />
-          <PlayerPanel
-            corner="tr"
-            color="green"
-            active={state.current === 'green' && !state.winner}
-            finished={finishedCount('green')}
-            dice={
-              state.current === 'green'
-                ? {
-                    value: state.lastDice,
-                    rolling: state.phase === 'rolling',
-                    canRoll,
-                    onRoll: handleRoll,
-                  }
-                : undefined
-            }
-          />
+          <div className="corner-row">
+            <CornerBadge
+              side="left"
+              color="red"
+              active={state.current === 'red' && !state.winner}
+              dice={diceFor('red')}
+            />
+            <CornerBadge
+              side="right"
+              color="green"
+              active={state.current === 'green' && !state.winner}
+              dice={diceFor('green')}
+            />
+          </div>
 
           <Board
             state={state}
@@ -172,38 +161,20 @@ export default function GamePage() {
             onInvalidToken={handleInvalidToken}
           />
 
-          <PlayerPanel
-            corner="bl"
-            color="blue"
-            active={state.current === 'blue' && !state.winner}
-            finished={finishedCount('blue')}
-            dice={
-              state.current === 'blue'
-                ? {
-                    value: state.lastDice,
-                    rolling: state.phase === 'rolling',
-                    canRoll,
-                    onRoll: handleRoll,
-                  }
-                : undefined
-            }
-          />
-          <PlayerPanel
-            corner="br"
-            color="yellow"
-            active={state.current === 'yellow' && !state.winner}
-            finished={finishedCount('yellow')}
-            dice={
-              state.current === 'yellow'
-                ? {
-                    value: state.lastDice,
-                    rolling: state.phase === 'rolling',
-                    canRoll,
-                    onRoll: handleRoll,
-                  }
-                : undefined
-            }
-          />
+          <div className="corner-row">
+            <CornerBadge
+              side="left"
+              color="blue"
+              active={state.current === 'blue' && !state.winner}
+              dice={diceFor('blue')}
+            />
+            <CornerBadge
+              side="right"
+              color="yellow"
+              active={state.current === 'yellow' && !state.winner}
+              dice={diceFor('yellow')}
+            />
+          </div>
         </div>
       </div>
 
